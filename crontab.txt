@@ -1,0 +1,26 @@
+There are two issues:
+
+Crontab uses very limited PATH variables.
+Crontab doesn’t use a display or terminal to run code. Everything runs in the background.
+Initially, I was getting this error: “Message: ‘geckodriver’ executable needs to be in PATH.”
+
+The fix for that is to add the PATH to the browser driver to the cronjob.
+
+The second issue I ran into was the cronjob not having a display to use.
+
+The fix for that is to add a Display to the cronjob command.
+
+I set this up in Ubuntu 19.04 using crontab -e
+
+Here is the end result:
+
+
+
+
+* * * * * export DISPLAY=:0 && export PATH=$PATH:/usr/local/bin && /usr/bin/python3 /home/username/Documents/Project/project.py
+
+
+
+This cron job will run every minute.
+
+source: https://crtech.tips/using-crontab-and-selenium/
