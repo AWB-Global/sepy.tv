@@ -1,5 +1,3 @@
-import os
-
 domain_name = 'tradingview'
 tld ='com'
-q = ''
+q = 'u/AndyThats-it'  # --> u/'username' <-- 

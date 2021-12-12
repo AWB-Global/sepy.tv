@@ -1,0 +1,56 @@
+Solution
+Instead of find_element_by_* you have to use find_element(). As an example:
+
+You need to add the following import:
+
+from selenium.webdriver.common.by import By
+Using xpath:
+
+driver.find_element_by_xpath("//*[@id='search']").click()
+Needs be replaced with:
+
+driver.find_element(By.XPATH, "//*[@id='search']").click()
+Likewise you also have to consider the following changes:
+
+Using class_name:
+
+element = find_element_by_class_name("element_class_name")
+Needs be replaced with:
+
+element = driver.find_element(By.CLASS_NAME, "element_class_name")
+Using id:
+
+element = find_element_by_id("element_id")
+Needs be replaced with:
+
+element = driver.find_element(By.ID, "element_id")
+Using name:
+
+element = find_element_by_name("element_name")
+Needs be replaced with:
+
+element = driver.find_element(By.NAME, "element_name")
+Using link_text:
+
+element = find_element_by_link_text("element_link_text")
+Needs be replaced with:
+
+element = driver.find_element(By.LINK_TEXT, "element_link_text")
+Using partial_link_text:
+
+element = find_element_by_partial_link_text("element_partial_link_text")
+Needs be replaced with:
+
+element = driver.find_element(By.PARTIAL_LINK_TEXT, "element_partial_link_text")
+Using tag_name:
+
+element = find_element_by_tag_name("element_tag_name")
+Needs be replaced with:
+
+element = driver.find_element(By.TAG_NAME, "element_tag_name")
+Using css_selector:
+
+element = find_element_by_css_selector("element_css_selector")
+Needs be replaced with:
+
+element = driver.find_element(By.CSS_SELECTOR, "element_css_selector")

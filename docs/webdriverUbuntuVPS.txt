@@ -1,0 +1,73 @@
+Try to download HERE and use this latest chrome driver version.
+
+https://sites.google.com/a/chromium.org/chromedriver/downloads
+
+EDIT:
+
+Try this:
+
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+
+chrome_options = Options()
+chrome_options.add_argument('--headless')
+chrome_options.add_argument('--no-sandbox')
+chrome_options.add_argument('--disable-dev-shm-usage')
+d = webdriver.Chrome('/home/PycharmProjects/chromedriver',chrome_options=chrome_options)
+d.get('https://www.google.nl/')
+
+This error message...
+
+selenium.common.exceptions.WebDriverException: Message: unknown error: Chrome failed to start: crashed
+  (unknown error: DevToolsActivePort file doesn't exist)
+  (The process started from chrome location /opt/google/chrome/google-chrome is no longer running, so ChromeDriver is assuming that Chrome has crashed.)
+...implies that the ChromeDriver was unable to initiate/spawn a new WebBrowser i.e. Chrome Browser session.
+
+Your main issue is the Chrome browser is not installed at the default location within your system.
+
+The server i.e. ChromeDriver expects you to have Chrome installed in the default location for each system as per the image below:
+
+Chrome_binary_expected_location
+
+1For Linux systems, the ChromeDriver expects /usr/bin/google-chrome to be a symlink to the actual Chrome binary.
+
+Solution
+In case you are using a Chrome executable in a non-standard location you have to override the Chrome binary location as follows:
+
+Python Solution:
+
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+
+options = Options()
+options.binary_location = "C:\\path\\to\\chrome.exe"    #chrome binary location specified here
+options.add_argument("--start-maximized") #open Browser in maximized mode
+options.add_argument("--no-sandbox") #bypass OS security model
+options.add_argument("--disable-dev-shm-usage") #overcome limited resource problems
+options.add_experimental_option("excludeSwitches", ["enable-automation"])
+options.add_experimental_option('useAutomationExtension', False)
+driver = webdriver.Chrome(options=options, executable_path=r'C:\path\to\chromedriver.exe')
+driver.get('http://google.com/')
+Java Solution:
+
+System.setProperty("webdriver.chrome.driver", "C:\\Utility\\BrowserDrivers\\chromedriver.exe");
+ChromeOptions opt = new ChromeOptions();
+opt.setBinary("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe");  //chrome binary location specified here
+options.addArguments("start-maximized");
+options.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
+options.setExperimentalOption("useAutomationExtension", false);
+WebDriver driver = new ChromeDriver(opt);
+driver.get("https://www.google.com/");
+
+hope this helps someone. this worked for me on Ubuntu 18.10
+
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+chrome_options = Options()
+chrome_options.add_argument("--headless")
+chrome_options.add_argument('--no-sandbox')
+driver = webdriver.Chrome('/usr/lib/chromium-browser/chromedriver', options=chrome_options)
+driver.get('http://www.google.com')
+print('test')
+driver.close()
+source: https://newbedev.com/selenium-webdriverexception-chrome-failed-to-start-crashed-as-google-chrome-is-no-longer-running-so-chromedriver-is-assuming-that-chrome-has-crashed
